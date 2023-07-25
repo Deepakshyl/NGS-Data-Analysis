@@ -19,6 +19,8 @@ process_fasta_file() {
     
     # Process the fasta file using barrnap and save results in the specified output files
     barrnap -k bac --threads 16 -o "$output_fna" < "$fasta_file" > "$output_gff" 2> /dev/null
+    # Replace the existing ">" line in the .fna file with ">base_filename"
+    sed -i "1s/^>.*/>${base_filename}/" "$output_fna"
     # Append the content of the output_fna file to the combined output_fna file
     cat "$output_fna" >> "$combined_output_dir/combined_output.fna"
     cat "$output_gff" >> "$combined_output_dir/combined_output.gff"
@@ -48,4 +50,3 @@ main() {
 }
 
 main
-
