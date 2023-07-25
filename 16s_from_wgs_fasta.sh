@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#Install "conda install -c bioconda -c conda-forge barrnap"
 # Function to process .fasta files
 process_fasta_file() {
     local fasta_file="$1"
