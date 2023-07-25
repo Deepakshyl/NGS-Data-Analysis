@@ -1,2 +1,5 @@
 # NGS-Data-Analysis
-Day today reproducible work scripts
+Day today NGS reproducible work scripts
+#Install
+conda install -c bioconda -c conda-forge barrnap
+
