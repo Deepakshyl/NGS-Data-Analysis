@@ -1,15 +1,27 @@
-#!/bin/bash
 #Install "conda install -c bioconda -c conda-forge barrnap"
+
+#!/bin/bash
+# Directory to store the combined output_fna files
+combined_output_dir="combined_output"
+mkdir -p "$combined_output_dir"
+
+
 # Function to process .fasta files
 process_fasta_file() {
     local fasta_file="$1"
     echo "$1"
-        # Add your processing logic here
-    # For example, you could print the content of the file
-    #barrnap -k bac --threads "$(nproc)" -o output_rrna.fna < input_file.fna > output_rrna.gff 2> /dev/null
+    # Get the base filename (without the extension) of the input fasta file
+    local base_filename="$(basename "$fasta_file" .fasta)"
     
-    barrnap -k bac --threads 16 -o "$dir"/16s.fna < "$fasta_file" > "$dir"/16s.gff 2> /dev/null
-    #cat "$fasta_file"
+    # Use the base filename to create the output .fna and .gff files
+    local output_fna="$dir/${base_filename}_16s.fna"
+    local output_gff="$dir/${base_filename}_16s.gff"
+    
+    # Process the fasta file using barrnap and save results in the specified output files
+    barrnap -k bac --threads 16 -o "$output_fna" < "$fasta_file" > "$output_gff" 2> /dev/null
+    # Append the content of the output_fna file to the combined output_fna file
+    cat "$output_fna" >> "$combined_output_dir/combined_output.fna"
+    cat "$output_gff" >> "$combined_output_dir/combined_output.gff"
 }
 
 # Function to traverse subdirectories recursively
@@ -36,4 +48,3 @@ main() {
 }
 
 main
-
