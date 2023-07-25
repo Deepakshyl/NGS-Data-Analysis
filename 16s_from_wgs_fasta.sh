@@ -22,7 +22,7 @@ process_fasta_file() {
     barrnap -k bac --threads 16 -o "$output_fna" < "$fasta_file" > "$output_gff" 2> /dev/null
     
     # Replace the existing ">" line in the .fna file with ">base_filename"
-    sed -i "1s/^>.*/>${base_filename}/" "$output_fna"
+    sed -i "1s/^>.*/>${base_filename}/g" "$output_fna"
     
     # Remove ">5S_rRNA" and the next line from the .fna file
     sed -i '/>5S_rRNA/{N;d;}' "$output_fna"
